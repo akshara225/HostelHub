@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Student Dashboard | HostelHub</title>
+
+    <link rel="stylesheet" href="css/dashboard.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+
+        <h2>HostelHub</h2>
+
+        <ul>
+            <li><a href="student-dashboard.html">🏠 Dashboard</a></li>
+            <li><a href="laundry.html">🧺 Laundry</a></li>
+            <li><a href="leave.html">📝 Leave</a></li>
+            <li><a href="complaint.html">⚠ Complaint</a></li>
+            <li><a href="visitor.html">👥 Visitor</a></li>
+            <li><a href="mess.html">🍽 Mess Menu</a></li>
+            <li><a href="notification.html">🔔 Notifications</a></li>
+            <li><a href="profile.html">👤 Profile</a></li>
+            <li><a href="#" id="logoutBtn">🚪 Logout</a></li>
+        </ul>
+
+    </div>
+
+
+    <!-- Main Content -->
+    <div class="main">
+
+        <div class="topbar">
+
+            <h1>
+                Welcome, <span id="studentName">Student</span> 👋
+            </h1>
+
+        </div>
+
+
+        <!-- Student Details -->
+
+        <div class="student-info">
+
+            <h2>Student Details</h2>
+
+            <p>
+                <strong>Name:</strong>
+                <span id="name">Loading...</span>
+            </p>
+
+            <p>
+                <strong>Register Number:</strong>
+                <span id="regNo">Loading...</span>
+            </p>
+
+            <p>
+                <strong>Department:</strong>
+                <span id="department">Loading...</span>
+            </p>
+
+            <p>
+                <strong>Year:</strong>
+                <span id="year">Loading...</span>
+            </p>
+
+            <p>
+                <strong>Email:</strong>
+                <span id="email">Loading...</span>
+            </p>
+
+        </div>
+
+
+        <!-- Cards -->
+
+        <div class="cards">
+
+            <div class="card">
+                <h3>Laundry</h3>
+                <p id="laundryStatus">No Booking</p>
+            </div>
+
+            <div class="card">
+                <h3>Leave</h3>
+                <p id="leaveStatus">Pending</p>
+            </div>
+
+            <div class="card">
+                <h3>Complaints</h3>
+                <p id="complaintStatus">2 Active</p>
+            </div>
+
+            <div class="card">
+                <h3>Announcements</h3>
+                <p id="announcementStatus">3 New</p>
+            </div>
+
+        </div>
+
+
+        <!-- Activity -->
+
+        <div class="activity">
+
+            <h2>Recent Activity</h2>
+
+            <ul id="activityList">
+
+                <li>No recent activity</li>
+
+            </ul>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+document.addEventListener("DOMContentLoaded", async () => {
+
+    // ======================================
+    // GET LOGGED-IN STUDENT ID
+    // ======================================
+
+    const studentId =
+        localStorage.getItem("student_id");
+
+    const storedUser =
+        localStorage.getItem("user");
+
+
+    // ======================================
+    // LOGIN CHECK
+    // ======================================
+
+    if (!studentId || !storedUser) {
+
+        alert("Please login first.");
+
+        window.location.href =
+            "login.html";
+
+        return;
+
+    }
+
+
+    // ======================================
+    // LOAD STUDENT PROFILE
+    // ======================================
+
+    try {
+
+        const response = await fetch(
+            `http://127.0.0.1:5000/profile/${studentId}`
+        );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Unable to load student profile"
+            );
+
+        }
+
+
+        const data =
+            await response.json();
+
+
+        console.log(
+            "Dashboard profile:",
+            data
+        );
+
+
+        if (!data.success) {
+
+            throw new Error(
+                data.message ||
+                "Profile not found"
+            );
+
+        }
+
+
+        const student =
+            data.student;
+
+
+        // ======================================
+        // STUDENT DETAILS
+        // ======================================
+
+        document.getElementById(
+            "studentName"
+        ).textContent =
+            student.name || "Student";
+
+
+        document.getElementById(
+            "name"
+        ).textContent =
+            student.name || "-";
+
+
+        document.getElementById(
+            "regNo"
+        ).textContent =
+            student.reg_no || "-";
+
+
+        document.getElementById(
+            "department"
+        ).textContent =
+            student.department || "-";
+
+
+        document.getElementById(
+            "year"
+        ).textContent =
+            student.year || "-";
+
+
+        document.getElementById(
+            "email"
+        ).textContent =
+            student.email || "-";
+
+
+        // Update stored user
+        localStorage.setItem(
+            "user",
+            JSON.stringify(student)
+        );
+
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Dashboard Error:",
+            error
+        );
+
+        alert(
+            "Cannot load student details"
+        );
+
+    }
+
+
+    // ======================================
+    // LOAD LAUNDRY STATUS
+    // ======================================
+
+    try {
+
+        const response = await fetch(
+            `http://127.0.0.1:5000/laundry/${studentId}`
+        );
+
+
+        const data =
+            await response.json();
+
+
+        const laundryStatus =
+            document.getElementById(
+                "laundryStatus"
+            );
+
+
+        if (
+            data.success &&
+            data.laundry &&
+            data.laundry.length > 0
+        ) {
+
+            const latest =
+                data.laundry[0];
+
+
+            laundryStatus.textContent =
+                latest.status || "Pending";
+
+        }
+        else {
+
+            laundryStatus.textContent =
+                "No Booking";
+
+        }
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Laundry Status Error:",
+            error
+        );
+
+    }
+
+
+    // ======================================
+    // LOAD LEAVE STATUS
+    // ======================================
+
+    try {
+
+        const response = await fetch(
+            `http://127.0.0.1:5000/leave/${studentId}`
+        );
+
+
+        const data =
+            await response.json();
+
+
+        const leaveStatus =
+            document.getElementById(
+                "leaveStatus"
+            );
+
+
+        if (
+            data.success &&
+            data.leaves &&
+            data.leaves.length > 0
+        ) {
+
+            const latest =
+                data.leaves[0];
+
+
+            leaveStatus.textContent =
+                latest.status || "Pending";
+
+        }
+        else {
+
+            leaveStatus.textContent =
+                "No Request";
+
+        }
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Leave Status Error:",
+            error
+        );
+
+    }
+
+
+    // ======================================
+    // LOAD COMPLAINT STATUS
+    // ======================================
+
+    try {
+
+        const response = await fetch(
+            `http://127.0.0.1:5000/complaint/${studentId}`
+        );
+
+
+        const data =
+            await response.json();
+
+
+        const complaintStatus =
+            document.getElementById(
+                "complaintStatus"
+            );
+
+
+        if (
+            data.success &&
+            data.complaints
+        ) {
+
+            const complaints =
+                data.complaints;
+
+
+            const activeCount =
+                complaints.filter(
+                    item =>
+                        item.status !==
+                        "Resolved"
+                ).length;
+
+
+            if (activeCount > 0) {
+
+                complaintStatus.textContent =
+                    `${activeCount} Active`;
+
+            }
+            else {
+
+                complaintStatus.textContent =
+                    "No Active Complaints";
+
+            }
+
+        }
+        else {
+
+            complaintStatus.textContent =
+                "No Complaints";
+
+        }
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Complaint Status Error:",
+            error
+        );
+
+    }
+
+
+    // ======================================
+    // LOAD NOTIFICATIONS
+    // ======================================
+
+    try {
+
+        const response = await fetch(
+            "http://127.0.0.1:5000/notifications"
+        );
+
+
+        const data =
+            await response.json();
+
+
+        const announcementStatus =
+            document.getElementById(
+                "announcementStatus"
+            );
+
+
+        if (
+            data.success &&
+            data.notifications
+        ) {
+
+            announcementStatus.textContent =
+                `${data.notifications.length} New`;
+
+        }
+        else {
+
+            announcementStatus.textContent =
+                "No New";
+
+        }
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Notification Error:",
+            error
+        );
+
+    }
+
+
+    // ======================================
+    // RECENT ACTIVITY
+    // ======================================
+
+    const activityList =
+        document.getElementById(
+            "activityList"
+        );
+
+
+    activityList.innerHTML = "";
+
+
+    let activities = [];
+
+
+    // Leave activity
+    try {
+
+        const response = await fetch(
+            `http://127.0.0.1:5000/leave/${studentId}`
+        );
+
+        const data =
+            await response.json();
+
+        if (
+            data.success &&
+            data.leaves &&
+            data.leaves.length > 0
+        ) {
+
+            activities.push(
+                `📝 Leave request: ${data.leaves[0].status}`
+            );
+
+        }
+
+    }
+    catch (error) {
+
+        console.error(error);
+
+    }
+
+
+    // Laundry activity
+    try {
+
+        const response = await fetch(
+            `http://127.0.0.1:5000/laundry/${studentId}`
+        );
+
+        const data =
+            await response.json();
+
+        if (
+            data.success &&
+            data.laundry &&
+            data.laundry.length > 0
+        ) {
+
+            activities.push(
+                `🧺 Laundry booking: ${data.laundry[0].status}`
+            );
+
+        }
+
+    }
+    catch (error) {
+
+        console.error(error);
+
+    }
+
+
+    // Complaint activity
+    try {
+
+        const response = await fetch(
+            `http://127.0.0.1:5000/complaint/${studentId}`
+        );
+
+        const data =
+            await response.json();
+
+        if (
+            data.success &&
+            data.complaints &&
+            data.complaints.length > 0
+        ) {
+
+            activities.push(
+                `⚠️ Complaint: ${data.complaints[0].status}`
+            );
+
+        }
+
+    }
+    catch (error) {
+
+        console.error(error);
+
+    }
+
+
+    // Display activities
+
+    if (activities.length === 0) {
+
+        activityList.innerHTML = `
+            <li>No recent activity</li>
+        `;
+
+    }
+    else {
+
+        activities.forEach(activity => {
+
+            const li =
+                document.createElement("li");
+
+            li.textContent =
+                activity;
+
+            activityList.appendChild(li);
+
+        });
+
+    }
+
+});
+
+
+// ======================================
+// LOGOUT
+// ======================================
+
+document.getElementById(
+    "logoutBtn"
+).addEventListener(
+    "click",
+    (event) => {
+
+        event.preventDefault();
+
+
+        localStorage.removeItem(
+            "user"
+        );
+
+        localStorage.removeItem(
+            "student_id"
+        );
+
+        localStorage.removeItem(
+            "role"
+        );
+
+
+        window.location.href =
+            "login.html";
+
+    }
+);
+
+</script>
+</body>
+</html>

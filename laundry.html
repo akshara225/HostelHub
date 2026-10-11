@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Laundry Booking | HostelHub</title>
+
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/laundry.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+
+        .machine-btn,
+        .slot,
+        .book-btn {
+            cursor: pointer;
+        }
+
+        .machine-btn.selected,
+        .slot.selected {
+            border: 3px solid #6c5ce7;
+            background: #e8e4ff;
+            transform: scale(1.03);
+        }
+
+        .slot.booked {
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- SIDEBAR -->
+
+    <div class="sidebar">
+
+        <h2>HostelHub</h2>
+
+        <ul>
+
+            <li><a href="student-dashboard.html">🏠 Dashboard</a></li>
+
+            <li><a href="laundry.html">🧺 Laundry</a></li>
+
+            <li><a href="leave.html">📝 Leave</a></li>
+
+            <li><a href="complaint.html">⚠ Complaint</a></li>
+
+            <li><a href="visitor.html">👥 Visitor</a></li>
+
+            <li><a href="mess.html">🍽 Mess Menu</a></li>
+
+            <li><a href="notification.html">🔔 Notifications</a></li>
+
+            <li><a href="profile.html">👤 Profile</a></li>
+
+            <li><a href="login.html">🚪 Logout</a></li>
+
+        </ul>
+
+    </div>
+
+
+    <!-- MAIN -->
+
+    <div class="main">
+
+        <h1>Laundry Booking</h1>
+
+
+        <div class="booking-container">
+
+            <!-- DATE -->
+
+            <label for="bookingDate">Select Date</label>
+
+            <input type="date" id="bookingDate">
+
+
+            <!-- MACHINE -->
+
+            <h3>Select Machine</h3>
+
+            <div class="machines">
+
+                <button type="button" class="machine-btn">
+                    Machine 1
+                </button>
+
+                <button type="button" class="machine-btn">
+                    Machine 2
+                </button>
+
+                <button type="button" class="machine-btn">
+                    Machine 3
+                </button>
+
+            </div>
+
+
+            <!-- TIME -->
+
+            <h3>Available Time Slots</h3>
+
+            <div class="slots">
+
+                <button type="button" class="slot available">
+                    7:00 - 8:00 AM
+                </button>
+
+                <button type="button" class="slot booked" disabled>
+                    8:00 - 9:00 AM
+                </button>
+
+                <button type="button" class="slot available">
+                    9:00 - 10:00 AM
+                </button>
+
+                <button type="button" class="slot available">
+                    10:00 - 11:00 AM
+                </button>
+
+                <button type="button" class="slot available">
+                    11:00 - 12:00 PM
+                </button>
+
+                <button type="button" class="slot available">
+                    12:00 - 1:00 PM
+                </button>
+
+            </div>
+
+
+            <!-- BOOK -->
+
+            <button type="button" class="book-btn" id="bookBtn">
+                Book Slot
+            </button>
+
+
+            <!-- MY BOOKING -->
+
+            <div class="my-booking">
+
+                <h2>My Booking</h2>
+
+                <p>
+                    <strong>Machine:</strong>
+                    <span id="machineText">-</span>
+                </p>
+
+                <p>
+                    <strong>Date:</strong>
+                    <span id="dateText">-</span>
+                </p>
+
+                <p>
+                    <strong>Time:</strong>
+                    <span id="timeText">-</span>
+                </p>
+
+                <p>
+                    <strong>Status:</strong>
+                    <span id="statusText">Pending</span>
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script src="js/laundry.js"></script>
+
+</body>
+
+</html>

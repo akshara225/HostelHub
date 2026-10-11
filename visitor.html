@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visitor Pass | HostelHub</title>
+
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/visitor.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="container">
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+
+        <h2>HostelHub</h2>
+
+        <ul>
+            <li><a href="student-dashboard.html">🏠 Dashboard</a></li>
+            <li><a href="laundry.html">🧺 Laundry</a></li>
+            <li><a href="leave.html">📝 Leave</a></li>
+            <li><a href="complaint.html">⚠ Complaint</a></li>
+            <li><a href="visitor.html">👥 Visitor</a></li>
+            <li><a href="mess.html">🍽 Mess Menu</a></li>
+            <li><a href="notification.html">🔔 Notifications</a></li>
+            <li><a href="profile.html">👤 Profile</a></li>
+            <li><a href="login.html">🚪 Logout</a></li>
+        </ul>
+
+    </div>
+
+    <!-- Main -->
+
+    <div class="main">
+
+        <h1>Visitor Pass</h1>
+
+        <div class="visitor-container">
+
+            <label>Visitor Name</label>
+            <input type="text" id="visitorName" placeholder="Enter visitor name">
+
+            <label>Relationship</label>
+            <select id="relationship">
+                <option value="">Select Relationship</option>
+                <option>Father</option>
+                <option>Mother</option>
+                <option>Brother</option>
+                <option>Sister</option>
+                <option>Friend</option>
+                <option>Guardian</option>
+                <option>Other</option>
+            </select>
+
+            <label>Visit Date</label>
+            <input type="date" id="visitDate">
+
+            <label>Visit Time</label>
+            <input type="time" id="visitTime">
+
+            <label>Purpose</label>
+            <textarea
+                id="purpose"
+                rows="4"
+                placeholder="Purpose of visit..."
+            ></textarea>
+
+            <button id="submitVisitor">
+                Request Visitor Pass
+            </button>
+
+        </div>
+
+        <div class="visitor-card">
+
+            <h2>My Visitor Pass</h2>
+
+            <p><strong>Visitor :</strong> <span id="nameText">-</span></p>
+
+            <p><strong>Relationship :</strong> <span id="relationText">-</span></p>
+
+            <p><strong>Date :</strong> <span id="dateText">-</span></p>
+
+            <p><strong>Time :</strong> <span id="timeText">-</span></p>
+
+            <p><strong>Purpose :</strong> <span id="purposeText">-</span></p>
+
+            <p><strong>Status :</strong> <span id="statusText">No Request</span></p>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="js/visitor.js"></script>
+
+</body>
+</html>

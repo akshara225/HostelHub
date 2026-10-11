@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Manage Wardens</title>
+
+<link rel="stylesheet" href="css/dashboard.css">
+<link rel="stylesheet" href="css/admin.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="sidebar">
+
+<h2>HostelHub</h2>
+
+<ul>
+
+<li><a href="admin-dashboard.html">📊 Dashboard</a></li>
+<li><a href="manage-students.html">👨‍🎓 Students</a></li>
+<li><a href="manage-wardens.html">👩‍💼 Wardens</a></li>
+<li><a href="manage-rooms.html">🏠 Rooms</a></li>
+<li><a href="reports.html">📈 Reports</a></li>
+
+</ul>
+
+</div>
+
+
+<div class="main">
+
+<h1>Manage Wardens</h1>
+
+
+<div class="form-box">
+
+<input type="text" id="wardenName" placeholder="Warden Name">
+
+<input type="text" id="wardenId" placeholder="Warden ID">
+
+<input type="text" id="wardenPhone" placeholder="Phone Number">
+
+
+<button onclick="addWarden()">
+
+➕ Add Warden
+
+</button>
+
+</div>
+
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Name</th>
+<th>ID</th>
+<th>Phone</th>
+<th>Action</th>
+
+</tr>
+
+</thead>
+
+
+<tbody id="wardenTable">
+
+</tbody>
+
+
+</table>
+
+
+</div>
+
+</div>
+
+
+<script src="js/manage-wardens.js"></script>
+
+</body>
+</html>

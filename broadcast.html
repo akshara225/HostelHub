@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Broadcast Notification</title>
+
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/warden.css">
+</head>
+<body>
+
+<div class="container">
+
+    <div class="sidebar">
+
+        <h2>HostelHub</h2>
+
+        <ul>
+            <li><a href="warden-dashboard.html">📊 Dashboard</a></li>
+            <li><a href="manage-leave.html">📝 Leave</a></li>
+            <li><a href="manage-complaints.html">⚠ Complaints</a></li>
+            <li><a href="manage-visitor.html">👥 Visitors</a></li>
+            <li><a href="manage-laundry.html">🧺 Laundry</a></li>
+            <li><a href="manage-mess.html">🍽 Mess Menu</a></li>
+            <li><a href="broadcast.html">📢 Broadcast</a></li>
+            <li><a href="login.html">🚪 Logout</a></li>
+        </ul>
+
+    </div>
+
+    <div class="main">
+
+        <h1>Broadcast Notification</h1>
+
+        <textarea id="message"
+            rows="6"
+            placeholder="Type announcement here..."></textarea>
+
+        <br><br>
+
+        <button onclick="sendBroadcast()">
+            Send Notification
+        </button>
+
+    </div>
+
+</div>
+
+<script src="js/broadcast.js"></script>
+
+</body>
+</html>

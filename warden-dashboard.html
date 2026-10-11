@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Warden Dashboard | HostelHub</title>
+
+    <link rel="stylesheet"
+          href="css/dashboard.css">
+
+    <link rel="stylesheet"
+          href="css/warden.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+
+    <style>
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-top: 25px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            text-align: center;
+        }
+
+        .card h2 {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            font-size: 32px;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .request-section {
+            margin-top: 40px;
+        }
+
+        .request-box {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin-top: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
+
+        .request-item {
+            padding: 18px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .request-item:last-child {
+            border-bottom: none;
+        }
+
+        .request-item h3 {
+            margin: 0 0 8px;
+        }
+
+        .request-item p {
+            margin: 5px 0;
+        }
+
+        .status {
+            font-weight: 600;
+        }
+
+        .logout-link {
+            cursor: pointer;
+        }
+
+        @media (max-width: 900px) {
+
+            .cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+        }
+
+        @media (max-width: 600px) {
+
+            .cards {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+    <!-- ================================= -->
+    <!-- SIDEBAR -->
+    <!-- ================================= -->
+
+    <div class="sidebar">
+
+        <h2>HostelHub</h2>
+
+        <ul>
+
+            <li>
+                <a href="warden-dashboard.html">
+                    📊 Dashboard
+                </a>
+            </li>
+
+            <li>
+                <a href="manage-laundry.html">
+                    🧺 Laundry Requests
+                </a>
+            </li>
+
+            <li>
+                <a href="leave.html">
+                    📝 Leave Requests
+                </a>
+            </li>
+
+            <li>
+                <a href="manage-complaints.html">
+                    ⚠ Complaints
+                </a>
+            </li>
+
+            <li>
+                <a href="manage-visitor.html">
+                    👥 Visitor Requests
+                </a>
+            </li>
+
+            <li>
+                <a href="manage-mess.html">
+                    🍽 Mess Menu
+                </a>
+            </li>
+
+            <li>
+                <a href="notification.html">
+                    🔔 Notifications
+                </a>
+            </li>
+
+            <li>
+                <a href="#"
+                   id="logoutBtn">
+                    🚪 Logout
+                </a>
+            </li>
+
+        </ul>
+
+    </div>
+
+
+
+    <!-- ================================= -->
+    <!-- MAIN -->
+    <!-- ================================= -->
+
+    <div class="main">
+
+
+        <!-- TOPBAR -->
+
+        <div class="topbar">
+
+            <h1>
+                Welcome Warden 👋
+            </h1>
+
+        </div>
+
+
+
+        <!-- ================================= -->
+        <!-- DASHBOARD CARDS -->
+        <!-- ================================= -->
+
+        <div class="cards">
+
+
+            <div class="card">
+
+                <h2>
+                    🧺 Laundry
+                </h2>
+
+                <p id="laundryCount">
+                    0
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <h2>
+                    📝 Leave
+                </h2>
+
+                <p id="leaveCount">
+                    0
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <h2>
+                    ⚠ Complaints
+                </h2>
+
+                <p id="complaintCount">
+                    0
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <h2>
+                    👥 Visitors
+                </h2>
+
+                <p id="visitorCount">
+                    0
+                </p>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- ================================= -->
+        <!-- RECENT LAUNDRY REQUESTS -->
+        <!-- ================================= -->
+
+        <div class="request-section">
+
+            <h2>
+                Recent Laundry Requests
+            </h2>
+
+
+            <div class="request-box"
+                 id="requestBox">
+
+                Loading requests...
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+
+<script>
+
+
+// =====================================
+// LOAD DASHBOARD
+// =====================================
+
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        loadDashboard();
+
+    }
+);
+
+
+
+// =====================================
+// LOAD ALL COUNTS
+// =====================================
+
+
+async function loadDashboard() {
+
+    // -----------------------------
+    // LAUNDRY
+    // -----------------------------
+
+    try {
+
+        const response =
+            await fetch(
+                "http://127.0.0.1:5000/laundry/all"
+            );
+
+        const data =
+            await response.json();
+
+        console.log(
+            "Laundry:",
+            data
+        );
+
+
+        if (data.success) {
+
+            document
+                .getElementById("laundryCount")
+                .textContent =
+                data.laundry.length;
+
+
+            displayLaundry(
+                data.laundry
+            );
+
+        }
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Laundry Error:",
+            error
+        );
+
+        document
+            .getElementById("laundryCount")
+            .textContent = "0";
+
+    }
+
+
+
+    // -----------------------------
+    // LEAVE
+    // -----------------------------
+
+    try {
+
+        const response =
+            await fetch(
+                "http://127.0.0.1:5000/leave/all"
+            );
+
+        const data =
+            await response.json();
+
+        console.log(
+            "Leave:",
+            data
+        );
+
+
+        if (data.success) {
+
+            document
+                .getElementById("leaveCount")
+                .textContent =
+                data.leaves.length;
+
+        }
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Leave Error:",
+            error
+        );
+
+    }
+
+
+
+    // -----------------------------
+    // COMPLAINTS
+    // -----------------------------
+
+    try {
+
+        const response =
+            await fetch(
+                "http://127.0.0.1:5000/complaint/all"
+            );
+
+        const data =
+            await response.json();
+
+
+        if (data.success) {
+
+            document
+                .getElementById("complaintCount")
+                .textContent =
+                data.complaints.length;
+
+        }
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Complaint Error:",
+            error
+        );
+
+    }
+
+
+
+    // -----------------------------
+    // VISITORS
+    // -----------------------------
+
+    try {
+
+        const response =
+            await fetch(
+                "http://127.0.0.1:5000/visitor/all"
+            );
+
+        const data =
+            await response.json();
+
+
+        if (data.success) {
+
+            document
+                .getElementById("visitorCount")
+                .textContent =
+                data.visitors.length;
+
+        }
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Visitor Error:",
+            error
+        );
+
+    }
+
+}
+
+
+
+// =====================================
+// DISPLAY LAUNDRY
+// =====================================
+
+
+function displayLaundry(laundry) {
+
+    const box =
+        document.getElementById(
+            "requestBox"
+        );
+
+
+    if (
+        !laundry ||
+        laundry.length === 0
+    ) {
+
+        box.innerHTML =
+            "<p>No Laundry Requests Yet</p>";
+
+        return;
+
+    }
+
+
+    box.innerHTML = "";
+
+
+    laundry.forEach(
+        function (item) {
+
+            const div =
+                document.createElement(
+                    "div"
+                );
+
+
+            div.className =
+                "request-item";
+
+
+            div.innerHTML = `
+
+                <h3>
+                    🧺 Laundry Request #${item.id}
+                </h3>
+
+                <p>
+                    <strong>
+                        Student ID:
+                    </strong>
+
+                    ${item.student_id}
+                </p>
+
+                <p>
+                    <strong>
+                        Machine:
+                    </strong>
+
+                    ${item.machine}
+                </p>
+
+                <p>
+                    <strong>
+                        Clothes:
+                    </strong>
+
+                    ${item.clothes_count}
+                </p>
+
+                <p>
+                    <strong>
+                        Pickup Date:
+                    </strong>
+
+                    ${item.pickup_date}
+                </p>
+
+                <p>
+                    <strong>
+                        Time Slot:
+                    </strong>
+
+                    ${item.time_slot}
+                </p>
+
+                <p>
+                    <strong>
+                        Status:
+                    </strong>
+
+                    <span class="status">
+                        ${item.status}
+                    </span>
+                </p>
+
+            `;
+
+
+            box.appendChild(div);
+
+        }
+    );
+
+}
+
+
+
+// =====================================
+// LOGOUT
+// =====================================
+
+
+document
+    .getElementById("logoutBtn")
+    .addEventListener(
+        "click",
+        function (event) {
+
+            event.preventDefault();
+
+
+            localStorage.removeItem(
+                "user"
+            );
+
+
+            localStorage.removeItem(
+                "role"
+            );
+
+
+            window.location.href =
+                "login.html";
+
+        }
+    );
+
+
+</script>
+
+
+</body>
+
+</html>

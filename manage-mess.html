@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Mess Menu</title>
+
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/warden.css">
+</head>
+<body>
+
+<div class="container">
+
+    <div class="sidebar">
+
+        <h2>HostelHub</h2>
+
+        <ul>
+            <li><a href="warden-dashboard.html">📊 Dashboard</a></li>
+            <li><a href="manage-leave.html">📝 Leave</a></li>
+            <li><a href="manage-complaints.html">⚠ Complaints</a></li>
+            <li><a href="manage-visitor.html">👥 Visitor</a></li>
+            <li><a href="manage-laundry.html">🧺 Laundry</a></li>
+            <li><a href="manage-mess.html">🍽 Mess Menu</a></li>
+            <li><a href="login.html">🚪 Logout</a></li>
+        </ul>
+
+    </div>
+
+    <div class="main">
+
+        <h1>Manage Mess Menu</h1>
+
+        <label>Breakfast</label>
+        <input type="text" id="breakfast">
+
+        <label>Lunch</label>
+        <input type="text" id="lunch">
+
+        <label>Snacks</label>
+        <input type="text" id="snacks">
+
+        <label>Dinner</label>
+        <input type="text" id="dinner">
+
+        <br><br>
+
+        <button onclick="saveMenu()">Save Menu</button>
+
+    </div>
+
+</div>
+
+<script src="js/manage-mess.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | HostelHub</title>
+
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/admin.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="container">
+
+    <div class="sidebar">
+
+        <h2>HostelHub</h2>
+
+        <ul>
+            <li><a href="admin-dashboard.html">📊 Dashboard</a></li>
+            <li><a href="manage-students.html">👨‍🎓 Students</a></li>
+            <li><a href="manage-wardens.html">👩‍💼 Wardens</a></li>
+            <li><a href="manage-rooms.html">🏠 Rooms</a></li>
+            <li><a href="reports.html">📈 Reports</a></li>
+            <li><a href="settings.html">⚙ Settings</a></li>
+            <li><a href="login.html">🚪 Logout</a></li>
+        </ul>
+
+    </div>
+
+    <div class="main">
+
+        <h1>Welcome, Admin 👋</h1>
+
+        <div class="cards">
+
+            <div class="card">
+                <h3>👨‍🎓 Students</h3>
+                <h2 id="studentCount">120</h2>
+            </div>
+
+            <div class="card">
+                <h3>👩‍💼 Wardens</h3>
+                <h2 id="wardenCount">5</h2>
+            </div>
+
+            <div class="card">
+                <h3>🏠 Rooms</h3>
+                <h2 id="roomCount">60</h2>
+            </div>
+
+            <div class="card">
+                <h3>⚠ Complaints</h3>
+                <h2 id="complaintCount">8</h2>
+            </div>
+
+        </div>
+
+        <h2 style="margin-top:40px;">Quick Actions</h2>
+
+        <div class="cards">
+
+            <div class="card">
+                <a href="manage-students.html">👨‍🎓 Manage Students</a>
+            </div>
+
+            <div class="card">
+                <a href="manage-wardens.html">👩‍💼 Manage Wardens</a>
+            </div>
+
+            <div class="card">
+                <a href="manage-rooms.html">🏠 Manage Rooms</a>
+            </div>
+
+            <div class="card">
+                <a href="reports.html">📈 View Reports</a>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="js/admin.js"></script>
+
+</body>
+</html>

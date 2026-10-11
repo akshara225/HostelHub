@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complaint | HostelHub</title>
+
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/complaint.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="container">
+
+    <!-- Sidebar -->
+
+    <div class="sidebar">
+
+        <h2>HostelHub</h2>
+
+        <ul>
+            <li><a href="student-dashboard.html">🏠 Dashboard</a></li>
+            <li><a href="laundry.html">🧺 Laundry</a></li>
+            <li><a href="leave.html">📝 Leave</a></li>
+            <li><a href="complaint.html">⚠ Complaint</a></li>
+            <li><a href="visitor.html">👥 Visitor</a></li>
+            <li><a href="mess.html">🍽 Mess Menu</a></li>
+            <li><a href="notification.html">🔔 Notifications</a></li>
+            <li><a href="profile.html">👤 Profile</a></li>
+            <li><a href="login.html">🚪 Logout</a></li>
+        </ul>
+
+    </div>
+
+    <!-- Main -->
+
+    <div class="main">
+
+        <h1>Raise Complaint</h1>
+
+        <div class="complaint-container">
+
+            <label>Category</label>
+
+            <select id="category">
+                <option value="">Select Category</option>
+                <option>Electrical</option>
+                <option>Plumbing</option>
+                <option>Wi-Fi</option>
+                <option>Cleaning</option>
+                <option>Furniture</option>
+                <option>Other</option>
+            </select>
+
+            <label>Description</label>
+
+            <textarea
+                id="description"
+                rows="5"
+                placeholder="Describe your issue..."
+            ></textarea>
+
+            <label>Priority</label>
+
+            <div class="priority">
+
+                <label><input type="radio" name="priority" value="Low"> Low</label>
+
+                <label><input type="radio" name="priority" value="Medium"> Medium</label>
+
+                <label><input type="radio" name="priority" value="High"> High</label>
+
+            </div>
+
+            <button id="submitComplaint">
+
+                Submit Complaint
+
+            </button>
+
+        </div>
+
+        <div class="complaint-card">
+
+            <h2>My Complaint</h2>
+
+            <p><strong>Category:</strong> <span id="categoryText">-</span></p>
+
+            <p><strong>Description:</strong> <span id="descriptionText">-</span></p>
+
+            <p><strong>Priority:</strong> <span id="priorityText">-</span></p>
+
+            <p><strong>Status:</strong> <span id="statusText">No Complaint</span></p>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="js/complaint.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Manage Rooms</title>
+
+<link rel="stylesheet" href="css/dashboard.css">
+<link rel="stylesheet" href="css/admin.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="sidebar">
+
+<h2>HostelHub</h2>
+
+<ul>
+
+<li><a href="admin-dashboard.html">📊 Dashboard</a></li>
+<li><a href="manage-students.html">👨‍🎓 Students</a></li>
+<li><a href="manage-wardens.html">👩‍💼 Wardens</a></li>
+<li><a href="manage-rooms.html">🏠 Rooms</a></li>
+<li><a href="reports.html">📈 Reports</a></li>
+
+</ul>
+
+</div>
+
+
+<div class="main">
+
+<h1>Manage Rooms</h1>
+
+
+<div class="form-box">
+
+<input type="text" id="roomNumber" placeholder="Room Number">
+
+<input type="number" id="capacity" placeholder="Room Capacity">
+
+
+<button onclick="addRoom()">
+
+➕ Add Room
+
+</button>
+
+
+</div>
+
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Room No</th>
+<th>Capacity</th>
+<th>Status</th>
+<th>Action</th>
+
+</tr>
+
+</thead>
+
+
+<tbody id="roomTable">
+
+</tbody>
+
+
+</table>
+
+
+</div>
+
+</div>
+
+
+<script src="js/manage-rooms.js"></script>
+
+</body>
+
+</html>

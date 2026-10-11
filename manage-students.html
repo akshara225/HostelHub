@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Students</title>
+
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+
+<div class="container">
+
+    <div class="sidebar">
+
+        <h2>HostelHub</h2>
+
+        <ul>
+            <li><a href="admin-dashboard.html">📊 Dashboard</a></li>
+            <li><a href="manage-students.html">👨‍🎓 Students</a></li>
+            <li><a href="manage-wardens.html">👩‍💼 Wardens</a></li>
+            <li><a href="manage-rooms.html">🏠 Rooms</a></li>
+            <li><a href="reports.html">📈 Reports</a></li>
+            <li><a href="settings.html">⚙️ Settings</a></li>
+        </ul>
+
+    </div>
+
+    <div class="main">
+
+        <h1>Manage Students</h1>
+
+        <div class="form-box">
+
+            <input type="text" id="studentName" placeholder="Student Name">
+
+            <input type="text" id="studentRoll" placeholder="Roll Number">
+
+            <input type="text" id="studentRoom" placeholder="Room Number">
+
+            <button onclick="addStudent()">
+                ➕ Add Student
+            </button>
+
+        </div>
+
+        <br>
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>Name</th>
+                    <th>Roll No</th>
+                    <th>Room</th>
+                    <th>Action</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="studentTable">
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+<script src="js/manage-students.js"></script>
+
+</body>
+</html>

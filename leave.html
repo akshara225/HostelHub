@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Leave | HostelHub</title>
+
+    <link rel="stylesheet"
+          href="css/dashboard.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+
+
+    <style>
+
+        .leave-box {
+
+            max-width: 650px;
+
+            background: white;
+
+            padding: 30px;
+
+            border-radius: 15px;
+
+            margin-top: 25px;
+
+            box-shadow:
+                0 5px 20px rgba(0,0,0,0.08);
+
+        }
+
+
+        .leave-box label {
+
+            display: block;
+
+            margin-top: 15px;
+
+            margin-bottom: 6px;
+
+            font-weight: 500;
+
+        }
+
+
+        .leave-box input,
+        .leave-box textarea {
+
+            width: 100%;
+
+            padding: 12px;
+
+            border: 1px solid #ddd;
+
+            border-radius: 8px;
+
+            box-sizing: border-box;
+
+            font-family: Poppins, sans-serif;
+
+        }
+
+
+        .leave-box textarea {
+
+            height: 100px;
+
+            resize: vertical;
+
+        }
+
+
+        .leave-box button {
+
+            margin-top: 20px;
+
+            padding: 12px 25px;
+
+            border: none;
+
+            border-radius: 8px;
+
+            cursor: pointer;
+
+            font-size: 15px;
+
+            background: #4f46e5;
+
+            color: white;
+
+        }
+
+
+        .leave-box button:hover {
+
+            opacity: 0.9;
+
+        }
+
+
+        .leave-list {
+
+            margin-top: 30px;
+
+        }
+
+
+        .leave-item {
+
+            background: white;
+
+            padding: 20px;
+
+            margin-top: 15px;
+
+            border-radius: 10px;
+
+            box-shadow:
+                0 3px 12px rgba(0,0,0,0.06);
+
+        }
+
+
+        .leave-status {
+
+            font-weight: 600;
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+    <!-- ========================= -->
+    <!-- SIDEBAR -->
+    <!-- ========================= -->
+
+    <div class="sidebar">
+
+        <h2>HostelHub</h2>
+
+
+        <ul>
+
+            <li>
+                <a href="student-dashboard.html">
+                    🏠 Dashboard
+                </a>
+            </li>
+
+
+            <li>
+                <a href="laundry.html">
+                    🧺 Laundry
+                </a>
+            </li>
+
+
+            <li>
+                <a href="leave.html">
+                    📝 Leave
+                </a>
+            </li>
+
+
+            <li>
+                <a href="complaint.html">
+                    ⚠ Complaint
+                </a>
+            </li>
+
+
+            <li>
+                <a href="visitor.html">
+                    👥 Visitor
+                </a>
+            </li>
+
+
+            <li>
+                <a href="mess.html">
+                    🍽 Mess Menu
+                </a>
+            </li>
+
+
+            <li>
+                <a href="notification.html">
+                    🔔 Notifications
+                </a>
+            </li>
+
+
+            <li>
+                <a href="profile.html">
+                    👤 Profile
+                </a>
+            </li>
+
+
+            <li>
+                <a href="#"
+                   id="logoutBtn">
+
+                    🚪 Logout
+
+                </a>
+            </li>
+
+        </ul>
+
+    </div>
+
+
+
+    <!-- ========================= -->
+    <!-- MAIN CONTENT -->
+    <!-- ========================= -->
+
+    <div class="main">
+
+
+        <div class="topbar">
+
+            <h1>
+                Leave Request 📝
+            </h1>
+
+        </div>
+
+
+
+        <!-- ========================= -->
+        <!-- LEAVE FORM -->
+        <!-- ========================= -->
+
+        <div class="leave-box">
+
+            <h2>
+                Apply for Leave
+            </h2>
+
+
+            <form id="leaveForm">
+
+
+                <label for="from_date">
+                    From Date
+                </label>
+
+
+                <input
+                    type="date"
+                    id="from_date"
+                    required
+                >
+
+
+
+                <label for="to_date">
+                    To Date
+                </label>
+
+
+                <input
+                    type="date"
+                    id="to_date"
+                    required
+                >
+
+
+
+                <label for="reason">
+                    Reason
+                </label>
+
+
+                <textarea
+                    id="reason"
+                    placeholder="Enter your reason"
+                    required
+                ></textarea>
+
+
+
+                <button type="submit">
+
+                    Submit Leave
+
+                </button>
+
+
+            </form>
+
+        </div>
+
+
+
+        <!-- ========================= -->
+        <!-- PREVIOUS REQUESTS -->
+        <!-- ========================= -->
+
+        <div class="leave-list">
+
+            <h2>
+                My Leave Requests
+            </h2>
+
+
+            <div id="leaveList">
+
+                Loading...
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+
+<script>
+
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+
+        // =====================================
+        // CHECK LOGIN
+        // =====================================
+
+
+        const storedUser =
+            localStorage.getItem("user");
+
+
+        if (!storedUser) {
+
+            alert(
+                "Please login first."
+            );
+
+            window.location.href =
+                "login.html";
+
+            return;
+
+        }
+
+
+        let user;
+
+
+        try {
+
+            user =
+                JSON.parse(storedUser);
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "User data error:",
+                error
+            );
+
+            localStorage.removeItem("user");
+
+            window.location.href =
+                "login.html";
+
+            return;
+
+        }
+
+
+        const studentId =
+            user.id;
+
+
+
+        if (!studentId) {
+
+            alert(
+                "Student ID not found. Please login again."
+            );
+
+            localStorage.removeItem("user");
+
+            window.location.href =
+                "login.html";
+
+            return;
+
+        }
+
+
+
+        // =====================================
+        // SUBMIT LEAVE
+        // =====================================
+
+
+        document
+            .getElementById("leaveForm")
+            .addEventListener(
+                "submit",
+                async function (e) {
+
+
+                    e.preventDefault();
+
+
+                    const fromDate =
+                        document
+                            .getElementById("from_date")
+                            .value;
+
+
+                    const toDate =
+                        document
+                            .getElementById("to_date")
+                            .value;
+
+
+                    const reason =
+                        document
+                            .getElementById("reason")
+                            .value
+                            .trim();
+
+
+
+                    // Check dates
+
+                    if (
+                        new Date(toDate)
+                        <
+                        new Date(fromDate)
+                    ) {
+
+                        alert(
+                            "To Date cannot be before From Date."
+                        );
+
+                        return;
+
+                    }
+
+
+
+                    if (!reason) {
+
+                        alert(
+                            "Please enter a reason."
+                        );
+
+                        return;
+
+                    }
+
+
+
+                    try {
+
+
+                        const response =
+                            await fetch(
+                                "http://127.0.0.1:5000/leave",
+                                {
+
+                                    method: "POST",
+
+                                    headers: {
+
+                                        "Content-Type":
+                                            "application/json"
+
+                                    },
+
+
+                                    body:
+                                        JSON.stringify({
+
+                                            student_id:
+                                                studentId,
+
+                                            from_date:
+                                                fromDate,
+
+                                            to_date:
+                                                toDate,
+
+                                            reason:
+                                                reason
+
+                                        })
+
+                                }
+                            );
+
+
+
+                        const data =
+                            await response.json();
+
+
+
+                        console.log(
+                            "Leave response:",
+                            data
+                        );
+
+
+
+                        if (data.success) {
+
+
+                            alert(
+                                "✅ Leave request submitted successfully!"
+                            );
+
+
+                            document
+                                .getElementById(
+                                    "leaveForm"
+                                )
+                                .reset();
+
+
+                            loadLeaves();
+
+
+                        }
+
+                        else {
+
+
+                            alert(
+                                data.message ||
+                                "Failed to submit leave request"
+                            );
+
+                        }
+
+
+                    }
+
+                    catch (error) {
+
+
+                        console.error(
+                            "Leave Error:",
+                            error
+                        );
+
+
+                        alert(
+                            "Cannot connect to backend.\n" +
+                            "Make sure server is running on port 5000."
+                        );
+
+                    }
+
+
+                }
+            );
+
+
+
+        // =====================================
+        // LOAD STUDENT LEAVE REQUESTS
+        // =====================================
+
+
+        async function loadLeaves() {
+
+
+            const list =
+                document.getElementById(
+                    "leaveList"
+                );
+
+
+            try {
+
+
+                list.innerHTML =
+                    "Loading...";
+
+
+                const response =
+                    await fetch(
+                        "http://127.0.0.1:5000/leave/" +
+                        studentId
+                    );
+
+
+
+                const data =
+                    await response.json();
+
+
+
+                console.log(
+                    "Leave data:",
+                    data
+                );
+
+
+
+                if (
+                    !data.success ||
+                    !data.leaves ||
+                    data.leaves.length === 0
+                ) {
+
+
+                    list.innerHTML =
+                        "<p>No leave requests yet.</p>";
+
+
+                    return;
+
+                }
+
+
+
+                list.innerHTML = "";
+
+
+
+                data.leaves.forEach(
+                    function (leave) {
+
+
+                        const item =
+                            document.createElement(
+                                "div"
+                            );
+
+
+                        item.className =
+                            "leave-item";
+
+
+
+                        item.innerHTML = `
+
+                            <strong>
+                                ${leave.from_date}
+                                →
+                                ${leave.to_date}
+                            </strong>
+
+                            <p>
+                                <strong>
+                                    Reason:
+                                </strong>
+
+                                ${leave.reason}
+                            </p>
+
+                            <p>
+                                <strong>
+                                    Status:
+                                </strong>
+
+                                <span class="leave-status">
+                                    ${leave.status}
+                                </span>
+                            </p>
+
+                        `;
+
+
+
+                        list.appendChild(
+                            item
+                        );
+
+
+                    }
+                );
+
+
+            }
+
+            catch (error) {
+
+
+                console.error(
+                    "Load Leave Error:",
+                    error
+                );
+
+
+                list.innerHTML =
+                    "<p>Unable to load leave requests.</p>";
+
+            }
+
+
+        }
+
+
+
+        // =====================================
+        // LOAD LEAVES ON PAGE OPEN
+        // =====================================
+
+
+        loadLeaves();
+
+
+
+        // =====================================
+        // LOGOUT
+        // =====================================
+
+
+        document
+            .getElementById("logoutBtn")
+            .addEventListener(
+                "click",
+                function (e) {
+
+
+                    e.preventDefault();
+
+
+                    localStorage.removeItem(
+                        "user"
+                    );
+
+
+                    localStorage.removeItem(
+                        "role"
+                    );
+
+
+                    window.location.href =
+                        "login.html";
+
+
+                }
+            );
+
+
+    }
+);
+
+</script>
+
+
+</body>
+
+</html>
